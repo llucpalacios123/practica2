@@ -3,4 +3,4 @@ project(practica2)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(practica2 main.cpp Solucionador.cpp Solucionador.h Solucio.cpp Solucio.h Candidat.cpp Candidat.h)
+add_executable(practica2 main.cpp Solucionador.cpp Solucionador.h Solucio.cpp Solucio.h Joia.cpp Joia.h Candidats.cpp Candidats.h)
