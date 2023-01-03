@@ -45,6 +45,7 @@ bool llegir_fitxer(string fitxer, Solucio &solucio){
             istream_iterator<string> begin(ss);
             istream_iterator<string> end;
             vector<string> tokens(begin, end);
+            solucio.afegirIncompatibilitats(tokens[0], tokens[1]);
         }
 
     }else{
@@ -56,7 +57,8 @@ bool llegir_fitxer(string fitxer, Solucio &solucio){
 }
 
 int main() {
-
-    llegir_fitxer("t0.txt");
+    Solucio s;
+    llegir_fitxer("t0.txt", s);
+    Solucionador solAlgBack;
     return 0;
 }

@@ -7,7 +7,14 @@
 
 
 class Candidats {
-
+public:
+    Candidats(int ant, int max);
+    int actual() const;
+    bool esFi() const;
+    void seguent();
+private:
+    int iCan;
+    int nJoies;
 };
 
 

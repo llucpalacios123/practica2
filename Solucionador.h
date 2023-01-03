@@ -6,8 +6,16 @@
 #define PRACTICA2_SOLUCIONADOR_H
 
 
-class Solucionador {
+#include "Solucio.h"
 
+class Solucionador {
+public:
+    bool solucionar(const Solucio &inicial);
+    Solucio obtenirSolucio() const;
+private:
+    void trobarUnaSolucio();
+    bool encertat;
+    Solucio sol;
 };
 
 

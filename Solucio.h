@@ -23,7 +23,6 @@ public:
     void desanotar(Candidats iCan);
     bool completa() const;
     void mostrar();
-    int distancia();
     bool potSerMillor(const Solucio& optima) const;
     bool esMillor(const Solucio &opt) const;
     void afegirJoia(Joia joia);
