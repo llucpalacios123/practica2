@@ -5,7 +5,7 @@
 #include "Candidats.h"
 
 Candidats::Candidats(int ant, int max) {
-    iCan = ant + 1;
+    iCan = ant +1;
     nJoies = max;
 }
 

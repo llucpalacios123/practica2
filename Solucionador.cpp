@@ -8,6 +8,7 @@ bool Solucionador::solucionar(const Solucio &inicial) {
     encertat = false;
     sol = inicial;
     trobarUnaSolucio();
+    sol.mostrar();
     return encertat;
 }
 
@@ -31,5 +32,9 @@ void Solucionador::trobarUnaSolucio() {
         }
         iCan.seguent();
     }
+
+}
+
+Solucionador::Solucionador() {
 
 }

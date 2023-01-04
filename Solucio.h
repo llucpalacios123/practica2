@@ -7,13 +7,14 @@
 
 
 #include <list>
+#include <vector>
 #include "Candidats.h"
 #include "Joia.h"
 
 class Solucio {
 public:
-
     Solucio();
+    Solucio(vector<Joia> joies, list<pair<int, int>> incompatibilitats, float pes, float volum, int numViatges);
     Solucio(const Solucio &o);
     ~Solucio();
     Solucio & operator=(const Solucio &o);
@@ -25,21 +26,23 @@ public:
     void mostrar();
     bool potSerMillor(const Solucio& optima) const;
     bool esMillor(const Solucio &opt) const;
-    void afegirJoia(Joia joia);
-    void afegirIncompatibilitats(string joia1, string joia2);
 private:
     void reserva();
     void copia(const Solucio &s);
     void allibera();
 
     int nivell;
-    int nFilas;
-    int nColumnas;
-    int valor;
-
-    list<Joia> llistaJoies;
-    list<pair<string,string>> llistaIncompatibilitats;
-
+    int viatge;
+    bool * agafades;
+    vector<vector<int>> viatges;
+    vector<Joia> llistaJoies;
+    list<pair<int,int>> llistaIncompatibilitats;
+    float pesMaxim;
+    float volumMaxim;
+    int nViatges;
+    int variança;
+    int nJoies;
+    int * agafats;
 };
 
 

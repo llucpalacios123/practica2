@@ -11,7 +11,23 @@
 
 using namespace std;
 
-bool llegir_fitxer(string fitxer, Solucio &solucio){
+void afegirIncompatibilitats(string joia1, string joia2, list<pair<int,int>> &incompatibilitats, const vector<Joia> &joies){
+    int j1 = -1, j2 = -1;
+    bool trobat1 = false, trobat2 = false;
+    for(int i = 0; i<joies.size() or (!trobat1 and !trobat2);i++){
+        if(joia1 == joies[i].nom()){
+            trobat1 = true;
+            j1 = i;
+        }
+        if(joia2 == joies[i].nom()){
+            trobat2 = true;
+            j2 = i;
+        }
+    }
+    incompatibilitats.push_back(make_pair(j1, j2));
+}
+
+bool llegir_fitxer(string fitxer, vector<Joia> &joies, list<pair<int,int>> &incompatibilitats){
     ifstream f;
     int contador_linia = 0;
     string s;
@@ -32,7 +48,7 @@ bool llegir_fitxer(string fitxer, Solucio &solucio){
             istream_iterator<string> begin(ss);
             istream_iterator<string> end;
             vector<string> tokens(begin, end);
-            solucio.afegirJoia(Joia(tokens[0], stof(tokens[1]), stof(tokens[2])));
+            joies.push_back(Joia(tokens[0], stof(tokens[1]), stof(tokens[2])));
         }
 
         getline(f,linia);
@@ -45,7 +61,7 @@ bool llegir_fitxer(string fitxer, Solucio &solucio){
             istream_iterator<string> begin(ss);
             istream_iterator<string> end;
             vector<string> tokens(begin, end);
-            solucio.afegirIncompatibilitats(tokens[0], tokens[1]);
+            afegirIncompatibilitats(tokens[0], tokens[1], incompatibilitats, joies);
         }
 
     }else{
@@ -56,9 +72,14 @@ bool llegir_fitxer(string fitxer, Solucio &solucio){
 
 }
 
+
+
 int main() {
-    Solucio s;
-    llegir_fitxer("t0.txt", s);
-    Solucionador solAlgBack;
+    vector<Joia> joies;
+    list<pair<int,int>> incompatibilitats;
+    llegir_fitxer("t0.txt", joies, incompatibilitats);
+    Solucio solucio(joies, incompatibilitats, 50, 50, 50);
+    Solucionador s;
+    s.solucionar(solucio);
     return 0;
 }

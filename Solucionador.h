@@ -10,6 +10,7 @@
 
 class Solucionador {
 public:
+    Solucionador();
     bool solucionar(const Solucio &inicial);
     Solucio obtenirSolucio() const;
 private:
