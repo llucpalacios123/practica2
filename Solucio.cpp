@@ -55,29 +55,35 @@ bool Solucio::acceptable(Candidats iCan) const {
 }
 
 void Solucio::anotar(Candidats iCan) {
-    float pes = 0, volum = 0;
-    for(auto const jv : viatges[viatge]){
-        pes += llistaJoies[jv].pes();
-        volum += llistaJoies[jv].volum();
+
+    bool anotat = false;
+    int i = 0;
+
+    for(i; i < viatges.size() and !anotat; i++){
+        int pes = pesViatge(i) + llistaJoies[iCan.actual()].pes();
+        int volum = volumViatge(i) + llistaJoies[iCan.actual()].volum();
+        if( pes <= pesMaxim
+           and volum <= volumMaxim){
+            viatges[i].push_back(iCan.actual());
+            anotat = true;
+        }
     }
 
-    if(pes + llistaJoies[iCan.actual()].pes() <= pesMaxim
-       and volum + llistaJoies[iCan.actual()].volum() <= volumMaxim){
-       viatges[viatge].push_back(iCan.actual());
-    }else{
+    if(!anotat){
         viatges.push_back(vector<int>());
         viatge++;
-        viatges[viatge].push_back(iCan.actual());
+        viatges[i].push_back(iCan.actual());
     }
-    agafats[nivell] = iCan.actual();
+
     nivell++;
+    agafats[nivell] = iCan.actual();
     agafades[iCan.actual()] = true;
 }
 
 void Solucio::desanotar(Candidats iCan) {
     agafats[nivell] = 0;
     nivell--;
-    agafades[iCan.actual()] = true;
+    agafades[iCan.actual()] = false;
     viatges[viatge].pop_back();
 }
 
@@ -87,10 +93,13 @@ bool Solucio::completa() const {
 
 void Solucio::mostrar() {
     for(int i = 0; i < viatges.size() ; i++){
-        cout << "viatge " + i << endl ;
+        cout << "*************************************" << endl;
+        cout << "* Caixa " << i+1 << "      " << pesViatge(i) <<" Kg      " << volumViatge(i) << "*"<< endl ;
+        cout << "* --------------------------------- *" << endl ;
         for(const auto j: viatges[i]){
-            cout << llistaJoies[j].nom() << endl;
+            cout << "* " << llistaJoies[j].nom()<< "      " << llistaJoies[j].pes() <<"Kg      " << llistaJoies[j].volum() << endl ;
         }
+        cout << "*************************************" << endl;
     }
 }
 
@@ -128,5 +137,21 @@ Solucio &Solucio::operator=(const Solucio &o) {
 }
 
 Solucio::Solucio() {}
+
+float Solucio::pesViatge(int n) const{
+    float pes = 0;
+    for(auto const jv : viatges[n]){
+        pes += llistaJoies[jv].pes();
+    }
+    return pes;
+}
+
+float Solucio::volumViatge(int n) const {
+    float volum = 0;
+    for(auto const jv : viatges[n]){
+        volum += llistaJoies[jv].volum();
+    }
+    return volum;
+}
 
 

@@ -78,7 +78,7 @@ int main() {
     vector<Joia> joies;
     list<pair<int,int>> incompatibilitats;
     llegir_fitxer("t0.txt", joies, incompatibilitats);
-    Solucio solucio(joies, incompatibilitats, 50, 50, 50);
+    Solucio solucio(joies, incompatibilitats, 25, 40, 5);
     Solucionador s;
     s.solucionar(solucio);
     return 0;

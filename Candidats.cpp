@@ -10,7 +10,7 @@ Candidats::Candidats(int ant, int max) {
 }
 
 bool Candidats::esFi() const {
-    return iCan>nJoies;
+    return iCan>=nJoies;
 }
 
 int Candidats::actual() const {

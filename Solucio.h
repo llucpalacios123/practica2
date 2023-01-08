@@ -10,6 +10,7 @@
 #include <vector>
 #include "Candidats.h"
 #include "Joia.h"
+#include <iomanip>
 
 class Solucio {
 public:
@@ -30,6 +31,8 @@ private:
     void reserva();
     void copia(const Solucio &s);
     void allibera();
+    float pesViatge(int n) const;
+    float volumViatge(int n) const;
 
     int nivell;
     int viatge;
