@@ -46,6 +46,7 @@ private:
     int variança;
     int nJoies;
     int * agafats;
+    int joiesRevisades;
 };
 
 

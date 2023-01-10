@@ -21,6 +21,7 @@ Solucio::Solucio(vector<Joia> joies, list<pair<int, int>> incompatibilitats, flo
     nivell = 0;
     reserva();
     agafats[0] = 0;
+    joiesRevisades = 0;
 }
 
 Solucio::~Solucio() {
@@ -32,25 +33,17 @@ Solucio::Solucio(const Solucio &o) {
 }
 
 Candidats Solucio::inicialitzarCandidats() const {
-    return Candidats(agafats[nivell], nJoies);
+    if(joiesRevisades>nJoies){
+        return Candidats(0, nJoies);
+    }else{
+        return Candidats(agafats[nivell], nJoies);
+    }
 }
 
 bool Solucio::acceptable(Candidats iCan) const {
-    float pes = 0, volum = 0;
-    bool acceptable = false;
-    /*for(auto const jv : viatges[viatge]){
-        pes += llistaJoies[jv].pes();
-        volum += llistaJoies[jv].volum();
-    }
 
-    if(pes + llistaJoies[iCan.actual()].pes() <= pesMaxim
-    and pes + llistaJoies[iCan.actual()].volum() <= volumMaxim
-    and agafades[iCan.actual()]){
-        acceptable = true;
-    }*/
-
-    return llistaJoies[iCan.actual()].pes() <= pesMaxim
-        and llistaJoies[iCan.actual()].volum() <= volumMaxim
+    return pesViatge(viatge) + llistaJoies[iCan.actual()].pes() <= pesMaxim
+        and volumViatge(viatge) + llistaJoies[iCan.actual()].volum() <= volumMaxim
         and !agafades[iCan.actual()];
 }
 
@@ -59,22 +52,9 @@ void Solucio::anotar(Candidats iCan) {
     bool anotat = false;
     int i = 0;
 
-    for(i; i < viatges.size() and !anotat; i++){
-        int pes = pesViatge(i) + llistaJoies[iCan.actual()].pes();
-        int volum = volumViatge(i) + llistaJoies[iCan.actual()].volum();
-        if( pes <= pesMaxim
-           and volum <= volumMaxim){
-            viatges[i].push_back(iCan.actual());
-            anotat = true;
-        }
-    }
-
-    if(!anotat){
-        viatges.push_back(vector<int>());
-        viatge++;
-        viatges[i].push_back(iCan.actual());
-    }
-
+    viatges.push_back(vector<int>());
+    viatges[viatge].push_back(iCan.actual());
+    joiesRevisades++;
     nivell++;
     agafats[nivell] = iCan.actual();
     agafades[iCan.actual()] = true;
@@ -82,6 +62,7 @@ void Solucio::anotar(Candidats iCan) {
 
 void Solucio::desanotar(Candidats iCan) {
     agafats[nivell] = 0;
+    joiesRevisades--;
     nivell--;
     agafades[iCan.actual()] = false;
     viatges[viatge].pop_back();
@@ -109,6 +90,7 @@ bool Solucio::esMillor(const Solucio &opt) const {
 
 void Solucio::reserva() {
     agafats = new int[nJoies+1];
+    agafades = new bool[nJoies+1, false];
 }
 
 void Solucio::copia(const Solucio &s) {
@@ -122,6 +104,7 @@ void Solucio::copia(const Solucio &s) {
     viatge = s.viatge;
     nivell = s.nivell;
     agafats = s.agafats;
+    joiesRevisades = s.joiesRevisades;
 }
 
 void Solucio::allibera() {

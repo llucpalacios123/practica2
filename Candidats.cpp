@@ -10,13 +10,13 @@ Candidats::Candidats(int ant, int max) {
 }
 
 bool Candidats::esFi() const {
-    return iCan>=nJoies;
+    return iCan>nJoies;
 }
 
 int Candidats::actual() const {
     if (esFi())
         throw("No hi ha més candidats"); // excepcio
-    return iCan;
+    return iCan-1;
 }
 
 void Candidats::seguent() {
